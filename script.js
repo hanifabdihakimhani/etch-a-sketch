@@ -1,19 +1,24 @@
-const container = document.querySelector('#container');
+const container_id = document.querySelector('#container');
+const reset_id = document.querySelector('#reset');
+let cols = 0;
+let rows = 0;
 
 function makeBox (cols, rows) {
-    cols += 1;
+    cols = prompt('Enter Columns : ');
+    rows = prompt('Enter Rows : ');
+    container_id.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    container_id.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+    const squares = container.querySelectorAll('div');
+    squares.forEach((div) => div.remove());
+
     for(i = 0; i <= (cols*rows); i++) {
-        const div = document.createElement("div");
-        div.setAttribute('class', 'cell');
-
-        if(i % cols === 0) {
-            div.style.cssText = 'border: 0; height: 0; width: 100%';
-        }else {
-            div.style.cssText = 'border: 1px solid black; height: 25px; width: 25px';
-        }
-
-        container.append(div);
+        const square = document.createElement("div");
+        container.insertAdjacentElement('beforeend', square);
+        square.addEventListener('mouseover', () => square.style.background = 'red');
+        square.style.background = 'blue';
     }
 };
 
-makeBox(16,16);
+makeBox();
+
+reset_id.onclick = () => makeBox();
